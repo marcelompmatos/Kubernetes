@@ -11,25 +11,9 @@ Passos
 4. mv tcb-vote*.zip kube 👋
 5. cd kube 👋
 6. unzip tcb-vote*.zip 👋
-
-
-
-
-
+7. Set project 👋
 ```bash
-    FROM python:3
-
-    COPY ./requirements.txt /app/requirements.txt
-
-    WORKDIR /app
-
-    RUN pip install --no-cache-dir -r requirements.txt
-
-    COPY . /app
-
-    ENTRYPOINT [ "python" ]
-
-    CMD [ "app.py" ]
+  gcloud config set project <PROJECT_ID>
 ```
 
 3. Zip e Upload app.zip para o Cloud Shell 👋

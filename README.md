@@ -2,33 +2,65 @@
 
 ## :computer: Exemplo de Kubernetes com Cloud
 
-Instalacão
-```bash
-https://learn.microsoft.com/pt-br/ef/core/cli/powershell
-```
 
-⚡ MultiCloud com DevOps 
-## 🛠 Provisionar Bucket no S3 AWS - Executando o arquivo main.tf
+Passos
 
-1. No terminal da AWS opçao action efetuar o upload do arquivo "main.tf"  👋
-2. Depois do upoload do Arquivo iremos executar comando do "Terraform "  👋
+1. Baixar o .zip https://github.com/marcelompmatos/Kubernetes.git
+2. Unzip tcb-vote.zip 👋
+3. mkdir kube 👋
+4. mv tcb-vote*.zip kube 👋
+5. cd kube 👋
+6. unzip tcb-vote*.zip 👋
 
-```bash
-  terraform init
-  terraform plan
-  terraform apply
-```
+
+
+
 
 ```bash
-Tornar o Bucket Privado - inserir o codigo no arquivo e executar os comandos "terraform plan" e "terraform apply"
+    FROM python:3
 
-  resource "aws_s3_bucket_public_access_block" "s3_block" {
-  bucket = aws_s3_bucket.s3_bucket.id
+    COPY ./requirements.txt /app/requirements.txt
 
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
+    WORKDIR /app
+
+    RUN pip install --no-cache-dir -r requirements.txt
+
+    COPY . /app
+
+    ENTRYPOINT [ "python" ]
+
+    CMD [ "app.py" ]
 ```
 
+3. Zip e Upload app.zip para o Cloud Shell 👋
+4. Unzip app.zip 👋
+5. Crie (Build) a Docker image 👋
+
+```bash
+    docker build -t app:1.0 .
+    docker image ls
+```
+
+5. Teste a imagem localmente no Cloud Shell👋
+
+```bash
+    docker container run --name app -p 5000:5000 app:1.0
+    docker container ls 
+    docker container ls --all
+    docker container start app
+    docker container stop app
+```
+
+6. Adicione tag a imagem👋
+
+```bash
+    docker tag app:1.0 us.gcr.io/<ID_PROJETO>/app
+```
+
+7. Suba (Push) a imagem para Container Registry na Google Cloud👋
+
+```bash
+    docker push us.gcr.io/<ID_PROJETO>/app
+```
+
+## 🛠 8. Faça o deploy da aplicação em container no Google Cloud Run usando a imagem criada👋

@@ -1,5 +1,4 @@
 # Kubernetes
-Exemplo de Kubernetes com Cloud
 
 ## :computer: Exemplo de Kubernetes com Cloud
 
